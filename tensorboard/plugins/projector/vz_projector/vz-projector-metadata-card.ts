@@ -135,6 +135,10 @@ class MetadataCard extends LegacyElementMixin(PolymerElement) {
         if (!pointMetadata.hasOwnProperty(metadataKey)) {
           continue;
         }
+        // Skip the metadata field which is also label
+        if (metadataKey === this.labelOption) {
+          continue;
+        }
         metadata.push({
           key: metadataKey,
           value: pointMetadata[metadataKey] as string,
