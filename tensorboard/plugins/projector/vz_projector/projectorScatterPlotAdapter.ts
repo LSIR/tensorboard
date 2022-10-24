@@ -670,11 +670,14 @@ export class ProjectorScatterPlotAdapter {
   private getLabelText(
     ds: DataSet,
     i: number,
-    accessor: string | null
+    accessor: string | null,
+    max_char: number = 30
   ): string {
-    return ds.points[i].metadata[accessor!] !== undefined
-      ? String(ds.points[i].metadata[accessor!])
-      : `Unknown #${i}`;
+    if (ds.points[i].metadata[accessor!] == undefined) {
+      return `Unknown #${i}`; 
+    }
+    const text = String(ds.points[i].metadata[accessor!]);
+    return (text.length <= max_char) ? text : `${text.slice(0, max_char)}...`;
   }
   private updateScatterPlotWithNewProjection(projection: Projection) {
     if (projection == null) {

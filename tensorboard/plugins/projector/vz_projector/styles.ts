@@ -126,7 +126,7 @@ registerStyleDomModule({
 
     .ink-panel-content h3 {
       font-weight: 500;
-      font-size: 14px;
+      font-size: 15px;
       margin-top: 20px;
       margin-bottom: 5px;
       text-transform: uppercase;
@@ -134,7 +134,7 @@ registerStyleDomModule({
 
     .ink-panel-header h3 {
       font-weight: 500;
-      font-size: 14px;
+      font-size: 15px;
       margin: 0;
       padding: 0 24px;
       text-transform: uppercase;

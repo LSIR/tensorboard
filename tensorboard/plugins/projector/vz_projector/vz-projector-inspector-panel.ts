@@ -35,6 +35,14 @@ type SpriteMetadata = {
   nCols?: number;
 };
 
+type ArticleMetdata = {
+  title: string;
+  lang: string;
+  source: string;
+  url: string;
+  country?: string;
+}
+
 @customElement('vz-projector-inspector-panel')
 class InspectorPanel extends LegacyElementMixin(PolymerElement) {
   static readonly template = template;
@@ -278,6 +286,16 @@ class InspectorPanel extends LegacyElementMixin(PolymerElement) {
       ];
     return metadata !== undefined ? String(metadata) : `Unknown #${pointIndex}`;
   }
+  private getArticleMetadataFromIndex(pointIndex: number): ArticleMetdata | null {
+    const metadata = this.projector.dataSet.points[pointIndex].metadata;
+    const articlesFields = ["title", "lang", "source", "url"];
+    const reducer = (acc: boolean, field: string): boolean => {
+      return acc && metadata.hasOwnProperty(field)
+    };
+    
+    return (metadata !== undefined && articlesFields.reduce(reducer, true))
+      ? metadata : null;
+  } 
   private spriteImageRenderer() {
     const spriteImagePath = this.spriteMeta.imagePath;
     const {aspectRatio, nCols} = this.spriteMeta as any;
@@ -339,6 +357,27 @@ class InspectorPanel extends LegacyElementMixin(PolymerElement) {
       valueElement.innerText = neighbor.dist.toFixed(3);
       labelValueElement.appendChild(labelElement);
       labelValueElement.appendChild(valueElement);
+      // Display articles metadata below the label
+      const articleMetadata = this.getArticleMetadataFromIndex(neighbor.index);
+      const articleFieldsElement = document.createElement('div');
+      if (articleMetadata) {
+        articleFieldsElement.className = 'articles-fields';
+        const sourceField = document.createElement('span');
+        sourceField.innerText = articleMetadata.source;
+        const countryAndLangField = document.createElement('span');
+        countryAndLangField.innerText = `${articleMetadata.country}/${articleMetadata.lang}`;
+        const linkField = document.createElement('span');
+        const linkFieldAnchor = document.createElement('a');
+        linkFieldAnchor.href = articleMetadata.url;
+        linkFieldAnchor.innerText = "Link";
+        linkFieldAnchor.target = "_blank";
+        linkFieldAnchor.rel = "noreferrer noopener";
+        linkField.appendChild(linkFieldAnchor);
+        articleFieldsElement.appendChild(sourceField);
+        articleFieldsElement.appendChild(countryAndLangField);
+        articleFieldsElement.appendChild(linkField);
+      }
+      // End
       const barElement = document.createElement('div');
       barElement.className = 'bar';
       const barFillElement = document.createElement('div');
@@ -362,6 +401,9 @@ class InspectorPanel extends LegacyElementMixin(PolymerElement) {
         neighborElement.appendChild(neighborElementImage);
       }
       neighborElementLink.appendChild(labelValueElement);
+      if (articleMetadata) {
+        neighborElementLink.appendChild(articleFieldsElement);
+      }
       neighborElementLink.appendChild(barElement);
       neighborElement.appendChild(neighborElementLink);
       nnlist.appendChild(neighborElement);

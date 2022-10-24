@@ -66,7 +66,7 @@ export const template = html`
 
     .nn-list .neighbor,
     .metadata-list .metadata {
-      font-size: 12px;
+      font-size: 14px;
       margin-bottom: 8px;
     }
 
@@ -80,6 +80,19 @@ export const template = html`
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .articles-fields {
+      font-size: 12px;
+      color: #727272;
+    }
+    
+    .articles-fields span {
+      margin-right: 8px;
+    }
+
+    .articles-fields span a {
+      color: #727272;
     }
 
     .nn-list .value,
@@ -200,7 +213,7 @@ export const template = html`
       border-bottom: 1px solid #ddd;
       cursor: pointer;
       display: flex;
-      font-size: 12px;
+      font-size: 14px;
       margin: 5px 0;
       padding: 4px 0;
     }

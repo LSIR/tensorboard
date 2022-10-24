@@ -58,7 +58,7 @@ class VzProjectorApp extends PolymerElement {
 
     <div id="container">
       <div id="appbar">
-        <div>Embedding Projector</div>
+        <div>Commpass Project - Embedding projector</div>
         <div class="icons">
           <a
             title="Documentation"

@@ -78,8 +78,8 @@ export const template = html`
         background: #fafafa;
         display: flex;
         height: 100%;
-        min-width: 300px;
-        width: 300px;
+        min-width: 400px;
+        width: 400px;
       }
 
       .file-name {
