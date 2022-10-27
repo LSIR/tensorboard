@@ -37,10 +37,11 @@ type SpriteMetadata = {
 
 type ArticleMetdata = {
   title: string;
-  lang: string;
+  language: string;
   source: string;
   url: string;
   country?: string;
+  owner?: string;
 }
 
 @customElement('vz-projector-inspector-panel')
@@ -288,7 +289,7 @@ class InspectorPanel extends LegacyElementMixin(PolymerElement) {
   }
   private getArticleMetadataFromIndex(pointIndex: number): ArticleMetdata | null {
     const metadata = this.projector.dataSet.points[pointIndex].metadata;
-    const articlesFields = ["title", "lang", "source", "url"];
+    const articlesFields = ["title", "language", "source", "url"];
     const reducer = (acc: boolean, field: string): boolean => {
       return acc && metadata.hasOwnProperty(field)
     };
@@ -365,7 +366,7 @@ class InspectorPanel extends LegacyElementMixin(PolymerElement) {
         const sourceField = document.createElement('span');
         sourceField.innerText = articleMetadata.source;
         const countryAndLangField = document.createElement('span');
-        countryAndLangField.innerText = `${articleMetadata.country}/${articleMetadata.lang}`;
+        countryAndLangField.innerText = `${articleMetadata.country}/${articleMetadata.language}`;
         const linkField = document.createElement('span');
         const linkFieldAnchor = document.createElement('a');
         linkFieldAnchor.href = articleMetadata.url;
